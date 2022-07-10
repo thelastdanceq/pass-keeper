@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/pass-keeper/static/css/main.1478d2d9.css",
-    "main.js": "/pass-keeper/static/js/main.bfa9dd26.js",
+    "main.js": "/pass-keeper/static/js/main.8ee47818.js",
     "static/media/girl.svg": "/pass-keeper/static/media/girl.1a4766f416d181e20ced4bd77212bcf3.svg",
     "static/media/man.svg": "/pass-keeper/static/media/man.1f8dd534364a4febe061cd71e69bd794.svg",
     "index.html": "/pass-keeper/index.html",
     "main.1478d2d9.css.map": "/pass-keeper/static/css/main.1478d2d9.css.map",
-    "main.bfa9dd26.js.map": "/pass-keeper/static/js/main.bfa9dd26.js.map"
+    "main.8ee47818.js.map": "/pass-keeper/static/js/main.8ee47818.js.map"
   },
   "entrypoints": [
     "static/css/main.1478d2d9.css",
-    "static/js/main.bfa9dd26.js"
+    "static/js/main.8ee47818.js"
   ]
 }
