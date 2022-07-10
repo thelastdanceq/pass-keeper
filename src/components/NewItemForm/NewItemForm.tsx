@@ -1,25 +1,25 @@
 import { Box, Button, TextField, useMediaQuery } from "@mui/material"
 import { getDatabase, push, ref } from "firebase/database"
-import React, { useContext } from "react"
+import React, { useCallback, useContext } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { AuthContext } from "../../contexts/Auth"
-const defaultValues = {
-	name: "",
-	pass: "",
-}
+import { defaultValues } from "./constants"
 
-export default function NewItemForm() {
+export const NewItemForm = () => {
 	const currentUser = useContext(AuthContext)
 	const { control, reset, handleSubmit } = useForm({ defaultValues })
 	const matches = useMediaQuery("(min-width:600px)")
 
-	function writeUserData({ name, pass }: { name: string; pass: string }) {
-		const db = getDatabase()
-		push(ref(db, "users/" + currentUser?.uid + "/store"), {
-			name,
-			pass,
-		}).then(() => reset())
-	}
+	const writeUserData = useCallback(
+		({ name, pass }: { name: string; pass: string }) => {
+			const db = getDatabase()
+			push(ref(db, "users/" + currentUser?.uid + "/store"), {
+				name,
+				pass,
+			}).then(() => reset())
+		},
+		[currentUser, reset]
+	)
 	return (
 		<form onSubmit={handleSubmit(writeUserData)}>
 			<Box

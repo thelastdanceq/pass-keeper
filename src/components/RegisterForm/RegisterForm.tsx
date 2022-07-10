@@ -1,21 +1,11 @@
 import { Grid, Input, TextField, Typography } from "@mui/material"
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
+import { useCallback } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
-import Form from "../Form/Form"
-
-interface IData {
-	email: string
-	pass: string
-	name: string
-	phone: string
-}
-const defaultValues = {
-	email: "",
-	pass: "",
-	name: "",
-	phone: "",
-}
+import { Form } from "../Form/Form"
+import { defaultValues } from "./constants"
+import { IData } from "./types"
 
 export const RegisterForm = () => {
 	const navigate = useNavigate()
@@ -26,15 +16,18 @@ export const RegisterForm = () => {
 		formState: { errors },
 	} = useForm({ defaultValues })
 
-	const submitHandler = async (data: IData) => {
-		try {
-			await createUserWithEmailAndPassword(getAuth(), data.email, data.pass)
-			navigate("/")
-			reset()
-		} catch (err) {
-			alert((err as Error).message)
-		}
-	}
+	const submitHandler = useCallback(
+		async (data: IData) => {
+			try {
+				await createUserWithEmailAndPassword(getAuth(), data.email, data.pass)
+				navigate("/")
+				reset()
+			} catch (err) {
+				alert((err as Error).message)
+			}
+		},
+		[navigate, reset]
+	)
 	return (
 		<Form heading={"Register"}>
 			<form

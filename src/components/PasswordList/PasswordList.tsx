@@ -1,10 +1,8 @@
 import { Stack } from "@mui/material"
-import PasswordItem from "../PasswordItem/PasswordItem"
-interface IProps {
-	list: Array<[string, { name: string; pass: string }]>
-}
+import { PasswordItem } from "../PasswordItem/PasswordItem"
+import { IProps } from "./types"
 
-export default function PasswordList({ list }: IProps) {
+export const PasswordList = ({ list }: IProps) => {
 	return (
 		<Stack direction='column' alignItems={"center"} width='100%' spacing={2}>
 			{list.map(([id, data]) => (

@@ -8,11 +8,11 @@ import {
 import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import GoogleIcon from "@mui/icons-material/Google"
-import Form from "../Form/Form"
+import { Form } from "../Form/Form"
 import { defaultValues } from "./constants"
 import { useCallback } from "react"
 
-export default function LoginForm() {
+export const LoginForm = () => {
 	const navigate = useNavigate()
 	const {
 		control,

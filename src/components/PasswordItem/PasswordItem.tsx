@@ -7,44 +7,41 @@ import {
 	Typography,
 } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
-import React, { useContext, useState } from "react"
+import React, { useCallback, useContext, useState } from "react"
 import { getDatabase, ref, remove, update } from "firebase/database"
 import { AuthContext } from "../../contexts/Auth"
 import EditIcon from "@mui/icons-material/Edit"
 import CheckIcon from "@mui/icons-material/Check"
-interface IProps {
-	id: string
-	data: { name: string; pass: string }
-}
+import { IProps } from "./types"
 
-export default function PasswordItem({ data, id }: IProps) {
+export const PasswordItem = ({ data, id }: IProps) => {
 	const [showPassword, setShow] = useState(false)
 	const [isEditing, setIsEditing] = useState(false)
 	const [currentPass, setCurrentPass] = useState(data.pass)
 	const currentUser = useContext(AuthContext)!
 
-	const handleClickShowPassword = () => {
+	const handleClickShowPassword = useCallback(() => {
 		setShow(!showPassword)
-	}
+	}, [showPassword])
 
-	const handleDelete = () => {
+	const handleDelete = useCallback(() => {
 		const db = getDatabase()
 		const rf = ref(db, `/users/${currentUser.uid}/store/${id}`)
 		remove(rf)
-	}
+	}, [currentUser, id])
 
-	const handleEdit = () => {
+	const handleEdit = useCallback(() => {
 		setIsEditing(!isEditing)
 		setShow(true)
-	}
+	}, [isEditing])
 
-	const handleConfirm = () => {
+	const handleConfirm = useCallback(() => {
 		setIsEditing(!isEditing)
 		setShow(false)
 		const db = getDatabase()
 		const rf = ref(db, `/users/${currentUser.uid}/store/${id}`)
 		update(rf, { pass: currentPass })
-	}
+	}, [isEditing, currentUser.uid, id, currentPass])
 
 	return (
 		<Box

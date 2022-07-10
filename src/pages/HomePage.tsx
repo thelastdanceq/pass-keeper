@@ -3,8 +3,8 @@ import { getAuth, signOut } from "firebase/auth"
 import { getDatabase, onValue, ref } from "firebase/database"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../contexts/Auth"
-import NewItemForm from "../components/NewItemForm/NewItemForm"
-import PasswordList from "../components/PasswordList/PasswordList"
+import { NewItemForm } from "../components/NewItemForm/NewItemForm"
+import { PasswordList } from "../components/PasswordList/PasswordList"
 
 export default function HomePage() {
 	const currentUser = useContext(AuthContext)
