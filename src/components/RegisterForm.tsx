@@ -1,7 +1,7 @@
-import { Grid, Input, TextField } from "@mui/material"
+import { Grid, Input, TextField, Typography } from "@mui/material"
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { Controller, useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Form from "./Form"
 
 interface IData {
@@ -140,6 +140,19 @@ export const RegisterForm = () => {
 					}}
 				/>
 			</form>
+			<Typography
+				sx={{
+					fontStyle: "normal",
+					fontWeight: 400,
+					fontSize: "16px",
+					lineHeight: "24px",
+					color: "#ABABAB",
+					textAlign: "center",
+					marginTop: "10px",
+				}}
+			>
+				If you already have acc, you can <Link to={"/login"}>log in</Link>
+			</Typography>
 		</Form>
 	)
 }

@@ -6,7 +6,7 @@ import {
 	signInWithPopup,
 } from "firebase/auth"
 import { Controller, useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import GoogleIcon from "@mui/icons-material/Google"
 import Form from "./Form"
 const defaultValues = {
@@ -110,6 +110,19 @@ export default function LoginForm() {
 					}}
 				/>
 			</form>
+			<Typography
+				sx={{
+					fontStyle: "normal",
+					fontWeight: 400,
+					fontSize: "16px",
+					lineHeight: "24px",
+					color: "#ABABAB",
+					textAlign: "center",
+					marginTop: "10px",
+				}}
+			>
+				If you don`t have acc, you can <Link to={"/register"}>register</Link>
+			</Typography>
 			<Box
 				sx={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}
 			>

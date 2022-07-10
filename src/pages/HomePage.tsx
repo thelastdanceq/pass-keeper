@@ -27,7 +27,7 @@ export default function HomePage() {
 		)
 		onValue(starCountRef, (snapshot) => {
 			const data = snapshot.val()
-			setData(Object.entries(data))
+			data ? setData(Object.entries(data)) : setData(data)
 		})
 	}, [currentUser])
 	return (
@@ -72,7 +72,11 @@ export default function HomePage() {
 							</Typography>
 						</Box>
 						<Box sx={{ marginTop: "20px" }}>
-							{!!data ? <PasswordList list={data} /> : null}
+							{!!data ? (
+								<PasswordList list={data} />
+							) : (
+								<h3>Nothing here, add something ...</h3>
+							)}
 						</Box>
 					</Box>
 					<NewItemForm />
