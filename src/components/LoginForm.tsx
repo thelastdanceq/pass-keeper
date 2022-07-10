@@ -1,7 +1,13 @@
-import { Grid, TextField, Input } from "@mui/material"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { Grid, TextField, Input, Typography, Box, Button } from "@mui/material"
+import {
+	getAuth,
+	signInWithEmailAndPassword,
+	GoogleAuthProvider,
+	signInWithPopup,
+} from "firebase/auth"
 import { Controller, useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import GoogleIcon from "@mui/icons-material/Google"
 import Form from "./Form"
 const defaultValues = {
 	email: "",
@@ -19,6 +25,16 @@ export default function LoginForm() {
 	const submitHandler = async (data: { email: string; pass: string }) => {
 		try {
 			await signInWithEmailAndPassword(getAuth(), data.email, data.pass)
+			navigate("/")
+			reset()
+		} catch (err) {
+			alert((err as Error).message)
+		}
+	}
+	const handleGoogleSignUp = async () => {
+		const provider = new GoogleAuthProvider()
+		try {
+			await signInWithPopup(getAuth(), provider)
 			navigate("/")
 			reset()
 		} catch (err) {
@@ -94,6 +110,36 @@ export default function LoginForm() {
 					}}
 				/>
 			</form>
+			<Box
+				sx={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}
+			>
+				<Typography
+					sx={{
+						fontStyle: "normal",
+						fontWeight: 400,
+						fontSize: "16px",
+						lineHeight: "24px",
+						color: "#ABABAB",
+					}}
+				>
+					OR
+				</Typography>
+			</Box>
+			<Button
+				variant={"contained"}
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+					width: "70%",
+					alignSelf: "center",
+					padding: "15px",
+					color: "white",
+				}}
+				onClick={handleGoogleSignUp}
+			>
+				<Typography>Sign up with</Typography>
+				<GoogleIcon />
+			</Button>
 		</Form>
 	)
 }

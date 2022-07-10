@@ -27,6 +27,7 @@ function App() {
 			<img
 				src={girl}
 				alt=''
+				className='img'
 				style={{
 					position: "absolute",
 					top: "155px",
@@ -37,6 +38,7 @@ function App() {
 			<img
 				src={man}
 				alt=''
+				className='img'
 				style={{
 					position: "absolute",
 					top: "190px",
@@ -44,7 +46,7 @@ function App() {
 					zIndex: 1,
 				}}
 			/>
-			<Box sx={{ zIndex: 55 }}>
+			<Box sx={{ zIndex: 55, width: "75%" }}>
 				<Routes>
 					<Route
 						path='/'
