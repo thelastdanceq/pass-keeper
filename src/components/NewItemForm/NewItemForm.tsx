@@ -2,6 +2,7 @@ import { Box, Button, TextField, useMediaQuery } from "@mui/material"
 import { getDatabase, push, ref } from "firebase/database"
 import React, { useCallback, useContext } from "react"
 import { Controller, useForm } from "react-hook-form"
+import { USER_STORE } from "../../constants/urls/urls"
 import { AuthContext } from "../../contexts/Auth"
 import { defaultValues } from "./constants"
 
@@ -13,7 +14,7 @@ export const NewItemForm = () => {
 	const writeUserData = useCallback(
 		({ name, pass }: { name: string; pass: string }) => {
 			const db = getDatabase()
-			push(ref(db, "users/" + currentUser?.uid + "/store"), {
+			push(ref(db, USER_STORE(currentUser ? currentUser?.uid : "")), {
 				name,
 				pass,
 			}).then(() => reset())

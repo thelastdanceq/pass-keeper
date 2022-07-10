@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage"
 import girl from "./assets/images/girl.svg"
 //@ts-ignore
 import man from "./assets/images/man.svg"
+import { HOME_PAGE, LOGIN_PAGE } from "./constants/urls/urls"
 
 function App() {
 	const currentUser = useContext(AuthContext)
@@ -50,15 +51,21 @@ function App() {
 				<Routes>
 					<Route
 						path='/'
-						element={!!currentUser ? <HomePage /> : <Navigate to={"/login"} />}
+						element={
+							!!currentUser ? <HomePage /> : <Navigate to={LOGIN_PAGE} />
+						}
 					/>
 					<Route
 						path='/login'
-						element={!!currentUser ? <Navigate to={"/"} /> : <LoginPage />}
+						element={
+							!!currentUser ? <Navigate to={HOME_PAGE} /> : <LoginPage />
+						}
 					/>
 					<Route
 						path='/register'
-						element={!!currentUser ? <Navigate to={"/"} /> : <RegisterPage />}
+						element={
+							!!currentUser ? <Navigate to={HOME_PAGE} /> : <RegisterPage />
+						}
 					/>
 					<Route path='*' element={<ErrorPage />} />
 				</Routes>

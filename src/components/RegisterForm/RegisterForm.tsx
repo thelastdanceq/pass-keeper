@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { useCallback } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
+import { HOME_PAGE, LOGIN_PAGE } from "../../constants/urls/urls"
 import { Form } from "../Form/Form"
 import { defaultValues } from "./constants"
 import { IData } from "./types"
@@ -20,7 +21,7 @@ export const RegisterForm = () => {
 		async (data: IData) => {
 			try {
 				await createUserWithEmailAndPassword(getAuth(), data.email, data.pass)
-				navigate("/")
+				navigate(HOME_PAGE)
 				reset()
 			} catch (err) {
 				alert((err as Error).message)
@@ -144,7 +145,7 @@ export const RegisterForm = () => {
 					marginTop: "10px",
 				}}
 			>
-				If you already have acc, you can <Link to={"/login"}>log in</Link>
+				If you already have acc, you can <Link to={LOGIN_PAGE}>log in</Link>
 			</Typography>
 		</Form>
 	)

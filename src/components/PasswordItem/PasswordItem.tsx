@@ -13,6 +13,7 @@ import { AuthContext } from "../../contexts/Auth"
 import EditIcon from "@mui/icons-material/Edit"
 import CheckIcon from "@mui/icons-material/Check"
 import { IProps } from "./types"
+import { USER_STORE_BY_ID } from "../../constants/urls/urls"
 
 export const PasswordItem = ({ data, id }: IProps) => {
 	const [showPassword, setShow] = useState(false)
@@ -26,7 +27,7 @@ export const PasswordItem = ({ data, id }: IProps) => {
 
 	const handleDelete = useCallback(() => {
 		const db = getDatabase()
-		const rf = ref(db, `/users/${currentUser.uid}/store/${id}`)
+		const rf = ref(db, USER_STORE_BY_ID(currentUser ? currentUser.uid : "", id))
 		remove(rf)
 	}, [currentUser, id])
 
@@ -39,9 +40,9 @@ export const PasswordItem = ({ data, id }: IProps) => {
 		setIsEditing(!isEditing)
 		setShow(false)
 		const db = getDatabase()
-		const rf = ref(db, `/users/${currentUser.uid}/store/${id}`)
+		const rf = ref(db, USER_STORE_BY_ID(currentUser ? currentUser.uid : "", id))
 		update(rf, { pass: currentPass })
-	}, [isEditing, currentUser.uid, id, currentPass])
+	}, [isEditing, currentUser, id, currentPass])
 
 	return (
 		<Box

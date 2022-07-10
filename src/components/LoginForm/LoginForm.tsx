@@ -11,6 +11,7 @@ import GoogleIcon from "@mui/icons-material/Google"
 import { Form } from "../Form/Form"
 import { defaultValues } from "./constants"
 import { useCallback } from "react"
+import { HOME_PAGE, REGISTER_PAGE } from "../../constants/urls/urls"
 
 export const LoginForm = () => {
 	const navigate = useNavigate()
@@ -24,7 +25,7 @@ export const LoginForm = () => {
 		async (data: { email: string; pass: string }) => {
 			try {
 				await signInWithEmailAndPassword(getAuth(), data.email, data.pass)
-				navigate("/")
+				navigate(HOME_PAGE)
 				reset()
 			} catch (err) {
 				alert((err as Error).message)
@@ -36,7 +37,7 @@ export const LoginForm = () => {
 		const provider = new GoogleAuthProvider()
 		try {
 			await signInWithPopup(getAuth(), provider)
-			navigate("/")
+			navigate(HOME_PAGE)
 			reset()
 		} catch (err) {
 			alert((err as Error).message)
@@ -124,7 +125,7 @@ export const LoginForm = () => {
 					marginTop: "10px",
 				}}
 			>
-				If you don`t have acc, you can <Link to={"/register"}>register</Link>
+				If you don`t have acc, you can <Link to={REGISTER_PAGE}>register</Link>
 			</Typography>
 			<Box
 				sx={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}
