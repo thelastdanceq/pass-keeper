@@ -85,7 +85,7 @@ export default function LoginForm() {
 					</Grid>
 				</Grid>
 
-				<Input
+				<Button
 					fullWidth
 					type='submit'
 					sx={{
@@ -108,7 +108,9 @@ export default function LoginForm() {
 							display: "none",
 						},
 					}}
-				/>
+				>
+					Log in
+				</Button>
 			</form>
 			<Typography
 				sx={{
