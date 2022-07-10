@@ -11,7 +11,9 @@ import GoogleIcon from "@mui/icons-material/Google"
 import { Form } from "../Form/Form"
 import { defaultValues } from "./constants"
 import { useCallback } from "react"
+import { IError } from "./types"
 import { HOME_PAGE, REGISTER_PAGE } from "../../constants/urls/urls"
+import { ErrorHandle } from "../../constants/errors/errors"
 
 export const LoginForm = () => {
 	const navigate = useNavigate()
@@ -27,8 +29,8 @@ export const LoginForm = () => {
 				await signInWithEmailAndPassword(getAuth(), data.email, data.pass)
 				navigate(HOME_PAGE)
 				reset()
-			} catch (err) {
-				alert((err as Error).message)
+			} catch (error: any) {
+				alert(ErrorHandle(error.code))
 			}
 		},
 		[navigate, reset]
@@ -39,8 +41,8 @@ export const LoginForm = () => {
 			await signInWithPopup(getAuth(), provider)
 			navigate(HOME_PAGE)
 			reset()
-		} catch (err) {
-			alert((err as Error).message)
+		} catch (error: any) {
+			alert(ErrorHandle(error.code))
 		}
 	}, [navigate, reset])
 	return (

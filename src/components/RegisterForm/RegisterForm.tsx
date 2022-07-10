@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { useCallback } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
+import { ErrorHandle } from "../../constants/errors/errors"
 import { HOME_PAGE, LOGIN_PAGE } from "../../constants/urls/urls"
 import { Form } from "../Form/Form"
 import { defaultValues } from "./constants"
@@ -23,8 +24,10 @@ export const RegisterForm = () => {
 				await createUserWithEmailAndPassword(getAuth(), data.email, data.pass)
 				navigate(HOME_PAGE)
 				reset()
-			} catch (err) {
-				alert((err as Error).message)
+			} catch (error: any) {
+				console.dir(error)
+
+				alert(ErrorHandle(error.code))
 			}
 		},
 		[navigate, reset]
@@ -56,9 +59,6 @@ export const RegisterForm = () => {
 							<Controller
 								name={"name"}
 								control={control}
-								rules={{
-									required: { message: "Field is required", value: true },
-								}}
 								render={({ field: { onChange, value } }) => (
 									<TextField
 										onChange={onChange}
@@ -73,9 +73,6 @@ export const RegisterForm = () => {
 							<Controller
 								name={"phone"}
 								control={control}
-								rules={{
-									required: { message: "Field is required", value: true },
-								}}
 								render={({ field: { onChange, value } }) => (
 									<TextField
 										onChange={onChange}
