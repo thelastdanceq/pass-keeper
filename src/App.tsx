@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import React, { useContext } from "react"
 import { Routes, Route, Navigate } from "react-router-dom"
-import { AuthContext } from "./Auth"
+import { AuthContext } from "./contexts/Auth"
 import { ErrorPage } from "./pages/ErrorPage"
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"

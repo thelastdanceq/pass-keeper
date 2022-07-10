@@ -1,20 +1,23 @@
-import { Grid, TextField, Input, Typography, Box, Button } from "@mui/material"
-import {
-	getAuth,
-	signInWithEmailAndPassword,
-	GoogleAuthProvider,
-	signInWithPopup,
-} from "firebase/auth"
+import { Grid, Input, TextField, Typography } from "@mui/material"
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
-import GoogleIcon from "@mui/icons-material/Google"
-import Form from "./Form"
+import Form from "../Form/Form"
+
+interface IData {
+	email: string
+	pass: string
+	name: string
+	phone: string
+}
 const defaultValues = {
 	email: "",
 	pass: "",
+	name: "",
+	phone: "",
 }
 
-export default function LoginForm() {
+export const RegisterForm = () => {
 	const navigate = useNavigate()
 	const {
 		control,
@@ -22,19 +25,10 @@ export default function LoginForm() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ defaultValues })
-	const submitHandler = async (data: { email: string; pass: string }) => {
+
+	const submitHandler = async (data: IData) => {
 		try {
-			await signInWithEmailAndPassword(getAuth(), data.email, data.pass)
-			navigate("/")
-			reset()
-		} catch (err) {
-			alert((err as Error).message)
-		}
-	}
-	const handleGoogleSignUp = async () => {
-		const provider = new GoogleAuthProvider()
-		try {
-			await signInWithPopup(getAuth(), provider)
+			await createUserWithEmailAndPassword(getAuth(), data.email, data.pass)
 			navigate("/")
 			reset()
 		} catch (err) {
@@ -42,7 +36,7 @@ export default function LoginForm() {
 		}
 	}
 	return (
-		<Form heading={"Log in"}>
+		<Form heading={"Register"}>
 			<form
 				style={{ margin: "45px 44px 0  44px " }}
 				onSubmit={handleSubmit(submitHandler)}
@@ -63,6 +57,42 @@ export default function LoginForm() {
 							)}
 						/>
 					</Grid>
+					<>
+						<Grid item xs={4}>
+							<Controller
+								name={"name"}
+								control={control}
+								rules={{
+									required: { message: "Field is required", value: true },
+								}}
+								render={({ field: { onChange, value } }) => (
+									<TextField
+										onChange={onChange}
+										value={value}
+										fullWidth
+										label='Name'
+									/>
+								)}
+							/>
+						</Grid>
+						<Grid item xs={4}>
+							<Controller
+								name={"phone"}
+								control={control}
+								rules={{
+									required: { message: "Field is required", value: true },
+								}}
+								render={({ field: { onChange, value } }) => (
+									<TextField
+										onChange={onChange}
+										value={value}
+										fullWidth
+										label='Phone'
+									/>
+								)}
+							/>
+						</Grid>
+					</>
 					<Grid item xs={8}>
 						<Controller
 							name={"pass"}
@@ -85,7 +115,7 @@ export default function LoginForm() {
 					</Grid>
 				</Grid>
 
-				<Button
+				<Input
 					fullWidth
 					type='submit'
 					sx={{
@@ -108,9 +138,7 @@ export default function LoginForm() {
 							display: "none",
 						},
 					}}
-				>
-					Log in
-				</Button>
+				/>
 			</form>
 			<Typography
 				sx={{
@@ -123,38 +151,8 @@ export default function LoginForm() {
 					marginTop: "10px",
 				}}
 			>
-				If you don`t have acc, you can <Link to={"/register"}>register</Link>
+				If you already have acc, you can <Link to={"/login"}>log in</Link>
 			</Typography>
-			<Box
-				sx={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}
-			>
-				<Typography
-					sx={{
-						fontStyle: "normal",
-						fontWeight: 400,
-						fontSize: "16px",
-						lineHeight: "24px",
-						color: "#ABABAB",
-					}}
-				>
-					OR
-				</Typography>
-			</Box>
-			<Button
-				variant={"contained"}
-				sx={{
-					display: "flex",
-					justifyContent: "space-between",
-					width: "70%",
-					alignSelf: "center",
-					padding: "15px",
-					color: "white",
-				}}
-				onClick={handleGoogleSignUp}
-			>
-				<Typography>Sign up with</Typography>
-				<GoogleIcon />
-			</Button>
 		</Form>
 	)
 }

@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material"
-import PasswordItem from "./PasswordItem"
+import PasswordItem from "../PasswordItem/PasswordItem"
 interface IProps {
 	list: Array<[string, { name: string; pass: string }]>
 }

@@ -1,10 +1,7 @@
 import { Box, Typography } from "@mui/material"
-import React, { ReactNode } from "react"
+import React from "react"
+import { IProps } from "./types"
 
-interface IProps {
-	children?: ReactNode | undefined
-	heading?: string
-}
 const Form: React.FC<IProps> = ({ children, heading }) => {
 	return (
 		<Box sx={{ zIndex: 2, maxWidth: "540px" }}>

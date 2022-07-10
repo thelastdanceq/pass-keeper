@@ -1,23 +1,18 @@
-import { Grid, Input, TextField, Typography } from "@mui/material"
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
+import { Grid, TextField, Typography, Box, Button } from "@mui/material"
+import {
+	getAuth,
+	signInWithEmailAndPassword,
+	GoogleAuthProvider,
+	signInWithPopup,
+} from "firebase/auth"
 import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
-import Form from "./Form"
+import GoogleIcon from "@mui/icons-material/Google"
+import Form from "../Form/Form"
+import { defaultValues } from "./constants"
+import { useCallback } from "react"
 
-interface IData {
-	email: string
-	pass: string
-	name: string
-	phone: string
-}
-const defaultValues = {
-	email: "",
-	pass: "",
-	name: "",
-	phone: "",
-}
-
-export const RegisterForm = () => {
+export default function LoginForm() {
 	const navigate = useNavigate()
 	const {
 		control,
@@ -25,18 +20,30 @@ export const RegisterForm = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ defaultValues })
-
-	const submitHandler = async (data: IData) => {
+	const submitHandler = useCallback(
+		async (data: { email: string; pass: string }) => {
+			try {
+				await signInWithEmailAndPassword(getAuth(), data.email, data.pass)
+				navigate("/")
+				reset()
+			} catch (err) {
+				alert((err as Error).message)
+			}
+		},
+		[navigate, reset]
+	)
+	const handleGoogleSignUp = useCallback(async () => {
+		const provider = new GoogleAuthProvider()
 		try {
-			await createUserWithEmailAndPassword(getAuth(), data.email, data.pass)
+			await signInWithPopup(getAuth(), provider)
 			navigate("/")
 			reset()
 		} catch (err) {
 			alert((err as Error).message)
 		}
-	}
+	}, [navigate, reset])
 	return (
-		<Form heading={"Register"}>
+		<Form heading={"Log in"}>
 			<form
 				style={{ margin: "45px 44px 0  44px " }}
 				onSubmit={handleSubmit(submitHandler)}
@@ -57,42 +64,6 @@ export const RegisterForm = () => {
 							)}
 						/>
 					</Grid>
-					<>
-						<Grid item xs={4}>
-							<Controller
-								name={"name"}
-								control={control}
-								rules={{
-									required: { message: "Field is required", value: true },
-								}}
-								render={({ field: { onChange, value } }) => (
-									<TextField
-										onChange={onChange}
-										value={value}
-										fullWidth
-										label='Name'
-									/>
-								)}
-							/>
-						</Grid>
-						<Grid item xs={4}>
-							<Controller
-								name={"phone"}
-								control={control}
-								rules={{
-									required: { message: "Field is required", value: true },
-								}}
-								render={({ field: { onChange, value } }) => (
-									<TextField
-										onChange={onChange}
-										value={value}
-										fullWidth
-										label='Phone'
-									/>
-								)}
-							/>
-						</Grid>
-					</>
 					<Grid item xs={8}>
 						<Controller
 							name={"pass"}
@@ -115,7 +86,7 @@ export const RegisterForm = () => {
 					</Grid>
 				</Grid>
 
-				<Input
+				<Button
 					fullWidth
 					type='submit'
 					sx={{
@@ -138,7 +109,9 @@ export const RegisterForm = () => {
 							display: "none",
 						},
 					}}
-				/>
+				>
+					Log in
+				</Button>
 			</form>
 			<Typography
 				sx={{
@@ -151,8 +124,38 @@ export const RegisterForm = () => {
 					marginTop: "10px",
 				}}
 			>
-				If you already have acc, you can <Link to={"/login"}>log in</Link>
+				If you don`t have acc, you can <Link to={"/register"}>register</Link>
 			</Typography>
+			<Box
+				sx={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}
+			>
+				<Typography
+					sx={{
+						fontStyle: "normal",
+						fontWeight: 400,
+						fontSize: "16px",
+						lineHeight: "24px",
+						color: "#ABABAB",
+					}}
+				>
+					OR
+				</Typography>
+			</Box>
+			<Button
+				variant={"contained"}
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+					width: "70%",
+					alignSelf: "center",
+					padding: "15px",
+					color: "white",
+				}}
+				onClick={handleGoogleSignUp}
+			>
+				<Typography>Sign up with</Typography>
+				<GoogleIcon />
+			</Button>
 		</Form>
 	)
 }

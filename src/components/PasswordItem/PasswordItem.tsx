@@ -9,7 +9,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete"
 import React, { useContext, useState } from "react"
 import { getDatabase, ref, remove, update } from "firebase/database"
-import { AuthContext } from "../Auth"
+import { AuthContext } from "../../contexts/Auth"
 import EditIcon from "@mui/icons-material/Edit"
 import CheckIcon from "@mui/icons-material/Check"
 interface IProps {

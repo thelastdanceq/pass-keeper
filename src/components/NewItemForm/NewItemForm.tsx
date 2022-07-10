@@ -2,7 +2,7 @@ import { Box, Button, TextField, useMediaQuery } from "@mui/material"
 import { getDatabase, push, ref } from "firebase/database"
 import React, { useContext } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { AuthContext } from "../Auth"
+import { AuthContext } from "../../contexts/Auth"
 const defaultValues = {
 	name: "",
 	pass: "",
