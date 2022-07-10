@@ -1,4 +1,4 @@
-import { Box, Button, Input, TextField } from "@mui/material"
+import { Box, Button, TextField, useMediaQuery } from "@mui/material"
 import { getDatabase, push, ref } from "firebase/database"
 import React, { useContext } from "react"
 import { Controller, useForm } from "react-hook-form"
@@ -11,6 +11,7 @@ const defaultValues = {
 export default function NewItemForm() {
 	const currentUser = useContext(AuthContext)
 	const { control, reset, handleSubmit } = useForm({ defaultValues })
+	const matches = useMediaQuery("(min-width:600px)")
 
 	function writeUserData({ name, pass }: { name: string; pass: string }) {
 		const db = getDatabase()
@@ -23,15 +24,17 @@ export default function NewItemForm() {
 		<form onSubmit={handleSubmit(writeUserData)}>
 			<Box
 				display='flex'
-				flexDirection={"row"}
+				flexDirection={matches ? "row" : "column"}
 				justifyContent={"space-between"}
+				gap={"20px"}
 			>
-				<Button type='submit'>ADD NEW PASSWORD</Button>
 				<Controller
 					name={"name"}
+					rules={{ required: { message: "field is required", value: true } }}
 					control={control}
 					render={({ field: { onChange, value } }) => (
 						<TextField
+							required
 							value={value}
 							onChange={onChange}
 							type={"name"}
@@ -40,6 +43,7 @@ export default function NewItemForm() {
 					)}
 				/>{" "}
 				<Controller
+					rules={{ required: { message: "field is required", value: true } }}
 					name={"pass"}
 					control={control}
 					render={({ field: { onChange, value } }) => (
@@ -50,7 +54,8 @@ export default function NewItemForm() {
 							label='Password'
 						/>
 					)}
-				/>{" "}
+				/>
+				<Button type='submit'>ADD NEW PASSWORD</Button>
 			</Box>
 		</form>
 	)

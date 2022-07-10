@@ -38,17 +38,38 @@ export default function HomePage() {
 						backgroundColor: "white",
 						borderRadius: "25px",
 						padding: "20px",
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						justifyContent: "center",
+						gap: "20px",
 					}}
 				>
+					<Box
+						sx={{
+							width: "100%",
+							display: "flex",
+							justifyContent: "space-between",
+						}}
+					>
+						<Button variant='outlined' onClick={handleSignOut}>
+							Sign Out
+						</Button>
+						<Avatar src={currentUser?.photoURL || ""}></Avatar>
+					</Box>
 					<Box maxWidth='700px'>
-						<Box sx={{ display: "flex", justifyContent: "space-between" }}>
-							<Button variant='outlined' onClick={handleSignOut}>
-								Sign Out
-							</Button>
-							<Avatar src={currentUser?.photoURL || ""}></Avatar>
-						</Box>
 						<Box marginTop={"20px"}>
-							<Typography>PASSWORD MANAGER</Typography>
+							<Typography
+								sx={{
+									fontStyle: "normal",
+									fontWeight: 500,
+									fontSize: "20px",
+									lineHeight: "82px",
+									color: "#000000",
+								}}
+							>
+								PASSWORD MANAGER
+							</Typography>
 						</Box>
 						<Box sx={{ marginTop: "20px" }}>
 							{!!data ? <PasswordList list={data} /> : null}

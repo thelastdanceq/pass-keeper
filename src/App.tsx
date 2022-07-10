@@ -46,7 +46,7 @@ function App() {
 					zIndex: 1,
 				}}
 			/>
-			<Box sx={{ zIndex: 55, width: "75%" }}>
+			<Box sx={{ zIndex: 55 }}>
 				<Routes>
 					<Route
 						path='/'

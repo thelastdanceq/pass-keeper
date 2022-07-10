@@ -6,9 +6,9 @@ interface IProps {
 
 export default function PasswordList({ list }: IProps) {
 	return (
-		<Stack direction='column' spacing={2}>
+		<Stack direction='column' alignItems={"center"} width='100%' spacing={2}>
 			{list.map(([id, data]) => (
-				<PasswordItem key={id} data={data} />
+				<PasswordItem key={id} id={id} data={data} />
 			))}
 		</Stack>
 	)
