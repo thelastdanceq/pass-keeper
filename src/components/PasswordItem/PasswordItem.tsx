@@ -1,94 +1,84 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material"
-import {
-	TextField,
-	InputAdornment,
-	IconButton,
-	Box,
-	Typography,
-} from "@mui/material"
-import DeleteIcon from "@mui/icons-material/Delete"
-import React, { useCallback, useContext, useState } from "react"
-import { getDatabase, ref, remove, update } from "firebase/database"
-import { AuthContext } from "../../contexts/Auth"
-import EditIcon from "@mui/icons-material/Edit"
-import CheckIcon from "@mui/icons-material/Check"
-import { IProps } from "./types"
-import { USER_STORE_BY_ID } from "../../constants/urls/urls"
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { TextField, InputAdornment, IconButton, Box, Typography } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import React, { useCallback, useContext, useState } from 'react'
+import { getDatabase, ref, remove, update } from 'firebase/database'
+import { AuthContext } from '../../contexts/Auth'
+import EditIcon from '@mui/icons-material/Edit'
+import CheckIcon from '@mui/icons-material/Check'
+import { IProps } from './types'
+import { USER_STORE_BY_ID } from '../../constants/urls/urls'
 
 export const PasswordItem = ({ data, id }: IProps) => {
-	const [showPassword, setShow] = useState(false)
-	const [isEditing, setIsEditing] = useState(false)
-	const [currentPass, setCurrentPass] = useState(data.pass)
-	const currentUser = useContext(AuthContext)!
+  const [showPassword, setShow] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [currentPass, setCurrentPass] = useState(data.pass)
+  const currentUser = useContext(AuthContext)!
 
-	const handleClickShowPassword = useCallback(() => {
-		setShow(!showPassword)
-	}, [showPassword])
+  const handleClickShowPassword = useCallback(() => {
+    setShow(!showPassword)
+  }, [showPassword])
 
-	const handleDelete = useCallback(() => {
-		const db = getDatabase()
-		const rf = ref(db, USER_STORE_BY_ID(currentUser ? currentUser.uid : "", id))
-		remove(rf)
-	}, [currentUser, id])
+  const handleDelete = useCallback(() => {
+    const db = getDatabase()
+    const rf = ref(db, USER_STORE_BY_ID(currentUser ? currentUser.uid : '', id))
+    remove(rf)
+  }, [currentUser, id])
 
-	const handleEdit = useCallback(() => {
-		setIsEditing(!isEditing)
-		setShow(true)
-	}, [isEditing])
+  const handleEdit = useCallback(() => {
+    setIsEditing(!isEditing)
+    setShow(true)
+  }, [isEditing])
 
-	const handleConfirm = useCallback(() => {
-		setIsEditing(!isEditing)
-		setShow(false)
-		const db = getDatabase()
-		const rf = ref(db, USER_STORE_BY_ID(currentUser ? currentUser.uid : "", id))
-		update(rf, { pass: currentPass })
-	}, [isEditing, currentUser, id, currentPass])
+  const handleConfirm = useCallback(() => {
+    setIsEditing(!isEditing)
+    setShow(false)
+    const db = getDatabase()
+    const rf = ref(db, USER_STORE_BY_ID(currentUser ? currentUser.uid : '', id))
+    update(rf, { pass: currentPass })
+  }, [isEditing, currentUser, id, currentPass])
 
-	return (
-		<Box
-			display='flex'
-			width={"100%"}
-			gap={"20px"}
-			justifyContent={"space-between"}
-			flexWrap={"wrap"}
-		>
-			<Typography display={"inline-block"}>{data.name}</Typography>
-			<Box display={"flex"} alignItems='center'>
-				<TextField
-					variant='standard'
-					disabled={!isEditing}
-					value={currentPass}
-					onChange={(e) => setCurrentPass(e.currentTarget.value)}
-					type={showPassword ? "text" : "password"}
-					sx={{
-						"::before": {
-							display: "none",
-						},
-						"::after": {
-							display: "none",
-						},
-					}}
-					InputProps={{
-						endAdornment: (
-							<InputAdornment position='end'>
-								<IconButton
-									aria-label='toggle password visibility'
-									onClick={handleClickShowPassword}
-									onMouseDown={handleClickShowPassword}
-								>
-									{showPassword ? <Visibility /> : <VisibilityOff />}
-								</IconButton>
-							</InputAdornment>
-						),
-					}}
-				/>
-				<DeleteIcon onClick={handleDelete} />
-				{isEditing ? (
-					<CheckIcon onClick={handleConfirm} />
-				) : (
-					<EditIcon onClick={handleEdit} />
-				)}
-			</Box>
-		</Box>
-	)
+  return (
+    <Box
+      display='flex'
+      width={'100%'}
+      gap={'20px'}
+      justifyContent={'space-between'}
+      flexWrap={'wrap'}
+    >
+      <Typography display={'inline-block'}>{data.name}</Typography>
+      <Box display={'flex'} alignItems='center'>
+        <TextField
+          variant='standard'
+          disabled={!isEditing}
+          value={currentPass}
+          onChange={(e) => setCurrentPass(e.currentTarget.value)}
+          type={showPassword ? 'text' : 'password'}
+          sx={{
+            '::before': {
+              display: 'none',
+            },
+            '::after': {
+              display: 'none',
+            },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label='toggle password visibility'
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleClickShowPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <DeleteIcon onClick={handleDelete} />
+        {isEditing ? <CheckIcon onClick={handleConfirm} /> : <EditIcon onClick={handleEdit} />}
+      </Box>
+    </Box>
+  )
 }

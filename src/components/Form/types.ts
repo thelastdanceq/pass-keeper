@@ -1,6 +1,6 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
 
 export interface IProps {
-	children?: ReactNode | undefined
-	heading?: string
+  children?: ReactNode | undefined
+  heading?: string
 }

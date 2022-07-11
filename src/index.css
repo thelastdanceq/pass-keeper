@@ -1,12 +1,12 @@
 @import-normalize;
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 @media only screen and (max-width: 800px) {
-	.img {
-		display: none;
-	}
+  .img {
+    display: none;
+  }
 }

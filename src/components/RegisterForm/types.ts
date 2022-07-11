@@ -1,6 +1,6 @@
 export interface IData {
-	email: string
-	pass: string
-	name: string
-	phone: string
+  email: string
+  pass: string
+  name: string
+  phone: string
 }

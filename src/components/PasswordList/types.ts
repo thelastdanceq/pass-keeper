@@ -1,3 +1,3 @@
 export interface IProps {
-	list: Array<[string, { name: string; pass: string }]>
+  list: Array<[string, { name: string; pass: string }]>
 }

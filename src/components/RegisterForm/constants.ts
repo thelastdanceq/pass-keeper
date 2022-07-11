@@ -1,6 +1,6 @@
 export const defaultValues = {
-	email: "",
-	pass: "",
-	name: "",
-	phone: "",
+  email: '',
+  pass: '',
+  name: '',
+  phone: '',
 }
